@@ -20,7 +20,7 @@ foldShared="" # AA000AA0-AAA0-0000-AA00-000000000000
 foldPrivat="" # BB111BB1-BBB1-1111-BB11-111111111111
 
 ## RetroArch Shader folder
-foldRetroShad="shaders_glsl"
+foldRetroShad="./RetroArch/shaders_glsl"
 
 ### Rename Update file name to avoid modification 
 if [ ! -e "$updfold/$updfile" ]; then
@@ -63,7 +63,7 @@ if [ $nextstep == "true" ]; then
 	done
 
 	## Update folder name into RetroArch Shader preset
-	for f in $(find ./RetroArch/$foldRetroShad -maxdepth 1 -name '*.glslp'); do
+	for f in $(find "$foldRetroShad" -maxdepth 1 -name '*.glslp'); do
 		echo "Updating file: $f"
 
 		mv "$f" "$f.sed"
@@ -77,7 +77,9 @@ if [ $nextstep == "true" ]; then
 fi
 
 ### Retore original Update file name
-mv "$updfold/$updfile" "$updfold/$updfileorig"
+if [ $nextstep == "true" ]; then
+	mv "$updfold/$updfile" "$updfold/$updfileorig"
+fi
 
 ### Finish
 IFS=$OLDIFS
